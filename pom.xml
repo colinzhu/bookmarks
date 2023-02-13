@@ -62,6 +62,75 @@
     </dependencies>
     <build>
         <plugins>
+            <plugin><!-- to extract babel.min.js, will be used by babel-maven-plugin-->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.8</version>
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.webjars.npm</groupId>
+                                    <artifactId>babel-standalone</artifactId>
+                                    <version>6.26.0</version>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                    <includes>**\/babel.min.js</includes>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin><!-- invoke babel to compile react jsx -->
+                <groupId>com.jarslab.maven</groupId>
+                <artifactId>babel-maven-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>js-transpile</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>babel</goal>
+                        </goals>
+                        <configuration>
+                            <verbose>true</verbose>
+                            <threads>4</threads>
+                            <babelSrc>${project.build.directory}/META-INF/resources/webjars/babel-standalone/6.26.0/babel.min.js</babelSrc>
+                            <sourceDir>${project.basedir}/src/main/resources/META-INF/resources/</sourceDir>
+                            <targetDir>${project.basedir}/target/compiled-js/</targetDir>
+                            <jsFiles>
+                                <jsFile>bookmarks.jsx</jsFile>
+                            </jsFiles>
+                            <prefix>trans-</prefix>
+                            <presets>react,es2015</presets>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin><!-- copy compiled jsx javascript file to resource folder -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <target>
+                                <move file="${project.basedir}/target/compiled-js/trans-bookmarks.jsx" tofile="${project.basedir}/src/main/resources/META-INF/resources/bookmarks.compiled.js" />
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>io.quarkus.platform</groupId>
                 <artifactId>quarkus-maven-plugin</artifactId>
