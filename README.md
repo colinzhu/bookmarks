@@ -1,4 +1,5 @@
-# A JavaScript Bookmark 
+# Bookmark 
+A very simple tool to build a team / shared bookmark
 
 ### Feature
 
