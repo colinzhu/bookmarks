@@ -82,6 +82,27 @@
                                     <outputDirectory>${project.build.directory}</outputDirectory>
                                     <includes>**\/babel.min.js</includes>
                                 </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.webjars.npm</groupId>
+                                    <artifactId>react-dom</artifactId>
+                                    <version>17.0.2</version>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                    <includes>**\/react-dom.production.min.js</includes>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.webjars.npm</groupId>
+                                    <artifactId>react</artifactId>
+                                    <version>17.0.2</version>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                    <includes>**\/react.production.min.js</includes>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.webjars</groupId>
+                                    <artifactId>bootstrap</artifactId>
+                                    <version>4.6.2</version>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                    <includes>**\/bootstrap.min.js,**\/bootstrap.min.css</includes>
+                                </artifactItem>
                             </artifactItems>
                         </configuration>
                     </execution>
@@ -123,6 +144,18 @@
                         <configuration>
                             <target>
                                 <move file="${project.basedir}/target/compiled-js/trans-bookmarks.jsx" tofile="${project.basedir}/src/main/resources/META-INF/resources/bookmarks.compiled.js" />
+
+                                <!-- to create a static version in 'target/static' folder -->
+                                <copy file="${project.basedir}/src/main/resources/META-INF/resources/index.html" todir="${project.basedir}/target/static/" />
+                                <copy file="${project.basedir}/src/main/resources/META-INF/resources/bookmarks.css" todir="${project.basedir}/target/static/" />
+                                <copy file="${project.basedir}/src/main/resources/META-INF/resources/bookmarks.compiled.js" todir="${project.basedir}/target/static/" />
+                                <copy todir="${project.basedir}/target/static/data">
+                                    <fileset dir="${project.basedir}/src/main/resources/META-INF/resources/data" />
+                                </copy>
+                                <move file="${project.basedir}/target/META-INF/resources/webjars/bootstrap/4.6.2/js/bootstrap.min.js" todir="${project.basedir}/target/static/webjars/bootstrap/js/" />
+                                <move file="${project.basedir}/target/META-INF/resources/webjars/bootstrap/4.6.2/css/bootstrap.min.css" todir="${project.basedir}/target/static/webjars/bootstrap/css/" />
+                                <move file="${project.basedir}/target/META-INF/resources/webjars/react/17.0.2/umd/react.production.min.js" todir="${project.basedir}/target/static/webjars/react/umd/" />
+                                <move file="${project.basedir}/target/META-INF/resources/webjars/react-dom/17.0.2/umd/react-dom.production.min.js" todir="${project.basedir}/target/static/webjars/react-dom/umd/" />
                             </target>
                         </configuration>
                         <goals>

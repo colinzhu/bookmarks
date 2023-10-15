@@ -47,8 +47,8 @@ class Bookmarks extends React.Component {
             dataUrl = urlParams.get("data");
         } else {
             let bmName = "default";
-            if (url.indexOf("?") > -1 && url.substring(url.indexOf("?")+1).length > 0) {
-                bmName = url.substring(url.indexOf("?")+1);
+            if (urlParams.has("name")) {
+                bmName = urlParams.get("name");
             }
             dataUrl = "data/links-" + bmName + ".json"
         }

@@ -19,10 +19,16 @@ var Bookmarks = function (_React$Component) {
 
     _createClass(Bookmarks, [{
         key: "renderBookmarks",
-        value: function renderBookmarks(linksGrouped) {
+        value: function renderBookmarks(linksGrouped, dataUrl) {
             return React.createElement(
                 "div",
                 { className: "container-fluid" },
+                React.createElement(
+                    "div",
+                    { id: "dataUrl" },
+                    "Bookmarks data: ",
+                    dataUrl
+                ),
                 React.createElement(
                     "div",
                     { className: "text-center m-4" },
@@ -69,19 +75,26 @@ var Bookmarks = function (_React$Component) {
             var _this2 = this;
 
             var url = window.location.href;
-            var bmName = "default";
-            if (url.indexOf("?") > -1 && url.substring(url.indexOf("?") + 1).length > 0) {
-                bmName = url.substring(url.indexOf("?") + 1);
+            var urlObj = new URL(url);
+            var urlParams = new URLSearchParams(urlObj.search);
+            var dataUrl = void 0;
+            if (urlParams.has("data")) {
+                dataUrl = urlParams.get("data");
+            } else {
+                var bmName = "default";
+                if (urlParams.has("name")) {
+                    bmName = urlParams.get("name");
+                }
+                dataUrl = "data/links-" + bmName + ".json";
             }
-            var jsonFile = "data/links-" + bmName + ".json";
-            fetch(jsonFile).then(function (response) {
+            fetch(dataUrl).then(function (response) {
                 return response.json();
             }).then(function (responseJson) {
-                return _this2.setState({ items: responseJson, allItems: responseJson });
+                return _this2.setState({ items: responseJson, allItems: responseJson, dataUrl: dataUrl });
             }).catch(function (error) {
                 console.error(error);
             });
-            document.title = "Bookmarks " + bmName;
+            document.title = "Bookmarks"; // + bmName;
         }
     }, {
         key: "filterItems",
@@ -110,7 +123,7 @@ var Bookmarks = function (_React$Component) {
                 var linksGrouped = this.groupBy(this.state.items, function (item) {
                     return item.tag;
                 });
-                return this.renderBookmarks(linksGrouped);
+                return this.renderBookmarks(linksGrouped, this.state.dataUrl);
             }
             return "";
         }

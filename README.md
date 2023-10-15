@@ -16,6 +16,13 @@ A very simple tool to build a team / shared bookmark
 - mvn quarkus:dev
 - open http://localhost:8080/bookmarks/index.dev.html (changes to bookmarks.jsx take effect immediately)
 - or open http://localhost:8080/bookmarks/index.html
+- to change the json data url, try: http://localhost:8080/bookmarks/?data=https://raw.githubusercontent.com/colinzhu/bookmarks/main/src/main/resources/META-INF/resources/data/links-default.json
+
+### Build a static (HTML + js + css) version
+- clone the project
+- update data file: META-INF/resources/data/links-default.json or create a links-xxx.json
+- mvn clean compile
+- the static version now is available in 'target/static' folder
 
 ### Build and run a release version jar
 - clone the project
@@ -28,6 +35,7 @@ java -Dfile.encoding=UTF-8 -jar bookmarks-1.0.0.jar
 
 ### todo
 - [x] support fetch data from external URL
+- [x] support building a static version, in 'target/static' folder
 - [ ] support caching of the bookmark data in local storage
 - [ ] support force refreshing the cache data
 - [ ] a editor UI which allow editing and exporting to a json data file
