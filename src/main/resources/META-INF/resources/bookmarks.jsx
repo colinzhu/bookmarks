@@ -61,9 +61,20 @@ class Bookmarks extends React.Component {
             }
             dataUrl = "data/links-" + bmName + ".json"
         }
-        fetch(dataUrl)
-            .then(response => response.json())
-            .then(responseJson => this.setState({items: responseJson, allItems: responseJson, dataUrl: "Current data: " + dataUrl}))
+        let data = null;
+        const cacheData = localStorage.getItem(dataUrl);
+        if (cacheData) {
+            data = Promise.resolve(JSON.parse(cacheData));
+            console.info("data from cache", data);
+        } else {
+            data = fetch(dataUrl).then(response => response.json());
+            console.info("data from fetch", data);
+        }
+        data.then(responseJson => {
+                console.info(responseJson);
+                localStorage.setItem(dataUrl, JSON.stringify(responseJson));
+                this.setState({items: responseJson, allItems: responseJson, dataUrl: "Current data: " + dataUrl});
+            })
             .catch(error => {
                 console.error(error);
                 this.setState({items:[], allItems:[], dataUrl: "Failed to load data from: " + dataUrl})
