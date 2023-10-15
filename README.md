@@ -10,9 +10,14 @@ A very simple tool to build a team / shared bookmark
 - Bookmark links stored in json file(s)
 - Supports multiple set of bookmarks
 
+### Develop and test
+- clone the project
+- update data file: META-INF/resources/data/links-default.json or create a links-xxx.json
+- mvn quarkus:dev
+- open http://localhost:8080/bookmarks/index.dev.html (changes to bookmarks.jsx take effect immediately)
+- or open http://localhost:8080/bookmarks/index.html
 
-### Feature
-
+### Build and run a release version jar
 - clone the project
 - update data file: META-INF/resources/data/links-default.json or create a links-xxx.json
 - build a jar with maven
@@ -20,3 +25,8 @@ A very simple tool to build a team / shared bookmark
  ```
 java -Dfile.encoding=UTF-8 -jar bookmarks-1.0.0.jar
 ```
+
+### todo
+- [x] support fetch data from external URL
+- [ ] support caching of the bookmark data in local storage
+- [ ] support force refreshing the cache data

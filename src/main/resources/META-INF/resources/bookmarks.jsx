@@ -1,7 +1,8 @@
 class Bookmarks extends React.Component {
-    renderBookmarks(linksGrouped) {
+    renderBookmarks(linksGrouped, dataUrl) {
         return (
             <div className="container-fluid">
+                <div id="dataUrl">Bookmarks data: {dataUrl}</div>
                 <div className="text-center m-4">
                     <input className="mr-2" size="40" autoFocus id="searchInput"
                            onChange={this.filterItems.bind(this)}
@@ -38,19 +39,26 @@ class Bookmarks extends React.Component {
     }
 
     componentDidMount() {
-        let url = window.location.href;
-        let bmName = "default";
-        if (url.indexOf("?") > -1 && url.substring(url.indexOf("?")+1).length > 0) {
-            bmName = url.substring(url.indexOf("?")+1);
+        const url = window.location.href;
+        const urlObj = new URL(url);
+        const urlParams = new URLSearchParams(urlObj.search);
+        let dataUrl;
+        if (urlParams.has("data")) {
+            dataUrl = urlParams.get("data");
+        } else {
+            let bmName = "default";
+            if (url.indexOf("?") > -1 && url.substring(url.indexOf("?")+1).length > 0) {
+                bmName = url.substring(url.indexOf("?")+1);
+            }
+            dataUrl = "data/links-" + bmName + ".json"
         }
-        let jsonFile = "data/links-" + bmName + ".json";
-        fetch(jsonFile)
+        fetch(dataUrl)
             .then(response => response.json())
-            .then(responseJson => this.setState({items: responseJson, allItems: responseJson}))
+            .then(responseJson => this.setState({items: responseJson, allItems: responseJson, dataUrl: dataUrl}))
             .catch(error => {
                 console.error(error);
             });
-        document.title = "Bookmarks " + bmName;
+        document.title = "Bookmarks";// + bmName;
     }
 
 
@@ -78,7 +86,7 @@ class Bookmarks extends React.Component {
     render() {
         if (this.state) {
             let linksGrouped = this.groupBy(this.state.items, item => item.tag);
-            return this.renderBookmarks(linksGrouped);
+            return this.renderBookmarks(linksGrouped, this.state.dataUrl);
         }
         return "";
     }
