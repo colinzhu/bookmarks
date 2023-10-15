@@ -9,6 +9,7 @@ A very simple tool to build a team / shared bookmark
 - Comes with a http server written in Java Quarkus
 - Bookmark links stored in json file(s)
 - Supports multiple set of bookmarks
+- Supports fetch data from external website
 
 ### Develop and test
 - clone the project
