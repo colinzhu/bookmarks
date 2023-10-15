@@ -30,3 +30,4 @@ java -Dfile.encoding=UTF-8 -jar bookmarks-1.0.0.jar
 - [x] support fetch data from external URL
 - [ ] support caching of the bookmark data in local storage
 - [ ] support force refreshing the cache data
+- [ ] a editor UI which allow editing and exporting to a json data file
