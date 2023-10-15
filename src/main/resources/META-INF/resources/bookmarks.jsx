@@ -4,7 +4,7 @@ class Bookmarks extends React.Component {
             <div>
                 <nav className="navbar bg-primary">
                     <div className="container-fluid">
-                        <div className="navbar-brand" style={{color:"#fff"}}>Bookmarks</div>
+                        <div className="navbar-brand text-light">Bookmarks</div>
                         <div className="d-flex" role="search">
                             <input className="form-control me-2" autoFocus id="searchInput"
                             type="search" placeholder="Search" aria-label="Search"
@@ -104,13 +104,13 @@ class Bookmarks extends React.Component {
 
 class Groups extends React.Component {
     renderLi(name, url) {
-        return <li className="list-group-item p-1" key={name}><a href={url}>{name}</a></li>;
+        return <li className="list-group-item p-1" key={name}><a className="text-secondary" href={url}>{name}</a></li>;
     }
 
     renderUl(title, links) {
         return (
             <ul className="list-group card border-0" key={title}>
-                <li className="list-group-item active p-1" key={title}>{title}</li>
+                <li className="list-group-item p-1 bg-info text-light" key={title}>{title}</li>
                 {links.map(link => this.renderLi(link.name, link.url))}
             </ul>
         )

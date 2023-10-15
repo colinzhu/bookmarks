@@ -31,7 +31,7 @@ var Bookmarks = function (_React$Component) {
                         { className: "container-fluid" },
                         React.createElement(
                             "div",
-                            { className: "navbar-brand", style: { color: "#fff" } },
+                            { className: "navbar-brand text-light" },
                             "Bookmarks"
                         ),
                         React.createElement(
@@ -170,7 +170,7 @@ var Groups = function (_React$Component2) {
                 { className: "list-group-item p-1", key: name },
                 React.createElement(
                     "a",
-                    { href: url },
+                    { className: "text-secondary", href: url },
                     name
                 )
             );
@@ -185,7 +185,7 @@ var Groups = function (_React$Component2) {
                 { className: "list-group card border-0", key: title },
                 React.createElement(
                     "li",
-                    { className: "list-group-item active p-1", key: title },
+                    { className: "list-group-item p-1 bg-info text-light", key: title },
                     title
                 ),
                 links.map(function (link) {
