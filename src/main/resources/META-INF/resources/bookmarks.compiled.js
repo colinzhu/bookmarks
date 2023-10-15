@@ -19,27 +19,47 @@ var Bookmarks = function (_React$Component) {
 
     _createClass(Bookmarks, [{
         key: "renderBookmarks",
-        value: function renderBookmarks(linksGrouped, dataUrl) {
+        value: function renderBookmarks(linksGrouped, dataUrlInfo) {
             return React.createElement(
                 "div",
-                { className: "container-fluid" },
+                null,
                 React.createElement(
-                    "div",
-                    { id: "dataUrl" },
-                    "Bookmarks data: ",
-                    dataUrl
+                    "nav",
+                    { className: "navbar bg-primary" },
+                    React.createElement(
+                        "div",
+                        { className: "container-fluid" },
+                        React.createElement(
+                            "div",
+                            { className: "navbar-brand", style: { color: "#fff" } },
+                            "Bookmarks"
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "d-flex", role: "search" },
+                            React.createElement("input", { className: "form-control me-2", autoFocus: true, id: "searchInput",
+                                type: "search", placeholder: "Search", "aria-label": "Search",
+                                onChange: this.filterItems.bind(this),
+                                onKeyDown: this.openFirstLink.bind(this)
+                            })
+                        )
+                    )
                 ),
                 React.createElement(
                     "div",
-                    { className: "text-center m-4" },
-                    React.createElement("input", { className: "mr-2", size: "40", autoFocus: true, id: "searchInput",
-                        onChange: this.filterItems.bind(this),
-                        onKeyDown: this.openFirstLink.bind(this),
-                        placeholder: "Search by keywords separated by space" })
+                    { className: "alert alert-info", role: "alert" },
+                    "Use parameter 'data' to load your own bookmark data. Example: ",
+                    React.createElement(
+                        "a",
+                        { href: "https://colinzhu.github.io/bookmarks/?data=https://raw.githubusercontent.com/colinzhu/bookmarks/main/src/main/resources/META-INF/resources/data/links-default.json" },
+                        "https://colinzhu.github.io/bookmarks/?data=https://raw.githubusercontent.com/colinzhu/bookmarks/main/src/main/resources/META-INF/resources/data/links-default.json"
+                    ),
+                    React.createElement("br", null),
+                    dataUrlInfo
                 ),
                 React.createElement(
                     "div",
-                    { id: "links", className: "card-columns" },
+                    { id: "links", className: "card-columns", style: { margin: "10px" } },
                     React.createElement(Groups, { linksGroups: linksGrouped })
                 )
             );
@@ -90,11 +110,12 @@ var Bookmarks = function (_React$Component) {
             fetch(dataUrl).then(function (response) {
                 return response.json();
             }).then(function (responseJson) {
-                return _this2.setState({ items: responseJson, allItems: responseJson, dataUrl: dataUrl });
+                return _this2.setState({ items: responseJson, allItems: responseJson, dataUrl: "Current data: " + dataUrl });
             }).catch(function (error) {
                 console.error(error);
+                _this2.setState({ items: [], allItems: [], dataUrl: "Failed to load data from: " + dataUrl });
             });
-            document.title = "Bookmarks"; // + bmName;
+            document.title = "Bookmarks";
         }
     }, {
         key: "filterItems",

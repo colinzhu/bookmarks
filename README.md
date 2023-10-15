@@ -37,6 +37,8 @@ java -Dfile.encoding=UTF-8 -jar bookmarks-1.0.0.jar
 ### todo
 - [x] support fetch data from external URL
 - [x] support building a static version, in 'target/static' folder
+- [x] support exception handling when not able to load the data file
+- [x] enhance look and feel
 - [ ] support caching of the bookmark data in local storage
 - [ ] support force refreshing the cache data
 - [ ] a editor UI which allow editing and exporting to a json data file

@@ -1,15 +1,24 @@
 class Bookmarks extends React.Component {
-    renderBookmarks(linksGrouped, dataUrl) {
+    renderBookmarks(linksGrouped, dataUrlInfo) {
         return (
-            <div className="container-fluid">
-                <div id="dataUrl">Bookmarks data: {dataUrl}</div>
-                <div className="text-center m-4">
-                    <input className="mr-2" size="40" autoFocus id="searchInput"
-                           onChange={this.filterItems.bind(this)}
-                           onKeyDown={this.openFirstLink.bind(this)}
-                           placeholder="Search by keywords separated by space"/>
+            <div>
+                <nav className="navbar bg-primary">
+                    <div className="container-fluid">
+                        <div className="navbar-brand" style={{color:"#fff"}}>Bookmarks</div>
+                        <div className="d-flex" role="search">
+                            <input className="form-control me-2" autoFocus id="searchInput"
+                            type="search" placeholder="Search" aria-label="Search"
+                                   onChange={this.filterItems.bind(this)}
+                                   onKeyDown={this.openFirstLink.bind(this)}
+                            />
+                        </div>
+                    </div>
+                </nav>
+                <div className="alert alert-info" role="alert">
+                  Use parameter 'data' to load your own bookmark data. Example: <a href="https://colinzhu.github.io/bookmarks/?data=https://raw.githubusercontent.com/colinzhu/bookmarks/main/src/main/resources/META-INF/resources/data/links-default.json">https://colinzhu.github.io/bookmarks/?data=https://raw.githubusercontent.com/colinzhu/bookmarks/main/src/main/resources/META-INF/resources/data/links-default.json</a>
+                  <br />{dataUrlInfo}
                 </div>
-                <div id="links" className="card-columns">
+                <div id="links" className="card-columns" style={{margin:"10px"}}>
                     <Groups linksGroups={linksGrouped}/>
                 </div>
             </div>
@@ -54,11 +63,12 @@ class Bookmarks extends React.Component {
         }
         fetch(dataUrl)
             .then(response => response.json())
-            .then(responseJson => this.setState({items: responseJson, allItems: responseJson, dataUrl: dataUrl}))
+            .then(responseJson => this.setState({items: responseJson, allItems: responseJson, dataUrl: "Current data: " + dataUrl}))
             .catch(error => {
                 console.error(error);
+                this.setState({items:[], allItems:[], dataUrl: "Failed to load data from: " + dataUrl})
             });
-        document.title = "Bookmarks";// + bmName;
+        document.title = "Bookmarks";
     }
 
 

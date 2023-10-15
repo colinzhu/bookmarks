@@ -1,3 +1,9 @@
 [
-  {"tag":["tagA"],"name":"name","url":"https://www.bing.com"}
+  {"tag":["search engine"],"name":"bing","url":"https://www.bing.com"},
+  {"tag":["search engine"],"name":"google","url":"https://www.google.com"},
+  {"tag":["video"],"name":"youtube","url":"https://www.youtube.com"},
+  {"tag":["video"],"name":"bilibili","url":"https://www.bilibili.com"},
+  {"tag":["other"],"name":"google translate","url":"https://translate.google.com"},
+  {"tag":["other"],"name":"facebook","url":"https://www.facebook.com"},
+  {"tag":["other"],"name":"gmail","url":"https://mail.google.com"}
 ]
